@@ -1,0 +1,19 @@
+{
+	"name": "FileSource",
+	"properties": {
+		"description": "File Intake",
+		"linkedServiceName": {
+			"referenceName": "AlphaVantage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "query?function=@dataset.Function&symbol=@dataset().Symbol&apikey=@activity('Set_Alpha_Vantage_API_Key').output.value",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
