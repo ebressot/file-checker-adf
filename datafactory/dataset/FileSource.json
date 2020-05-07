@@ -6,11 +6,23 @@
 			"referenceName": "AlphaVantage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"function": {
+				"type": "string"
+			},
+			"symbol": {
+				"type": "string"
+			},
+			"apikey": {
+				"type": "string",
+				"defaultValue": "@{activity('Set_Alpha_Vantage_API_Key').output.value}"
+			}
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "query?function=@{dataset().Function}&symbol=@{dataset().Symbol}&apikey=@{activity('Set_Alpha_Vantage_API_Key').output.value}",
+				"value": "query?function=@{dataset().function}&symbol=@{dataset().symbol}&apikey=@{dataset().apikey}",
 				"type": "Expression"
 			}
 		},
