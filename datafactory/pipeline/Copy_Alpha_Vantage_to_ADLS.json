@@ -91,7 +91,12 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "query?function=@{'<Function>'}&symbol=@{'<Symbol>'}&apikey=@{activity('Set_Alpha_Vantage_API_Key').output.value}"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "RestSource",
@@ -99,12 +104,39 @@
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "GET"
 								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings",
+										"quoteAllText": true
+									}
+								},
 								"enableStaging": false
 							},
 							"inputs": [
 								{
 									"referenceName": "FileSource",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"function": "@item().Function",
+										"symbol": "@item().Symbol",
+										"apikey": "@activity('Set_Alpha_Vantage_API_Key').output.value"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "FileTarget",
+									"type": "DatasetReference",
+									"parameters": {
+										"filePath": {
+											"value": "@{item().Function}/@{item().Symbol}",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
