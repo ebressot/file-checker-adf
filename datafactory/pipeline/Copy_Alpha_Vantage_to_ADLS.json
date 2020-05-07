@@ -59,7 +59,8 @@
 					"dataset": {
 						"referenceName": "FileList",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
