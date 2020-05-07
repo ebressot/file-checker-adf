@@ -10,12 +10,23 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "File_List.csv",
 				"fileSystem": "files"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "Function",
+				"type": "String"
+			},
+			{
+				"name": "Symbol",
+				"type": "String"
+			}
+		]
 	}
 }
