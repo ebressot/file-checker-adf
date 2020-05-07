@@ -111,7 +111,8 @@
 									},
 									"formatSettings": {
 										"type": "JsonWriteSettings",
-										"quoteAllText": true
+										"quoteAllText": true,
+										"filePattern": "setOfObjects"
 									}
 								},
 								"enableStaging": false
