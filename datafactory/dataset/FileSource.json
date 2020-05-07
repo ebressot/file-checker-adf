@@ -14,8 +14,7 @@
 				"type": "string"
 			},
 			"apikey": {
-				"type": "string",
-				"defaultValue": "@{activity('Set_Alpha_Vantage_API_Key').output.value}"
+				"type": "string"
 			}
 		},
 		"annotations": [],
