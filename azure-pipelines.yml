@@ -34,7 +34,7 @@ stages:
         deploy:
           steps:            
           - task: AzureResourceManagerTemplateDeployment@3
-            displayName: 'Azure Data Factory Deploy: {{ dataFactoryName }}'
+            displayName: 'Azure Data Factory Deploy: $(dataFactoryName)'
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'ARM DF FileChecker Tst'
