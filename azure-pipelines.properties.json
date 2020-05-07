@@ -1,0 +1,23 @@
+{
+    "parameters": [
+        {
+            "name": "azureRmConnection",
+            "type": "endpoint:azureRm",
+            "required": "true",
+            "displayName": "Azure Connection"
+        },
+        {
+            "name": "dataFactoryName",
+            "type": "dataSourcePicklist",
+            "required": "true",
+            "displayName": "Data Factory name"
+        }
+    ],
+    "dataSourceBindings": [
+        {
+            "dataSourceName": "AzureDataFactoryNames",
+            "endpointParameterName": "azureRmConnection",
+            "target": "dataFactoryName"
+        }
+    ]
+}

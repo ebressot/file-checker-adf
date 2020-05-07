@@ -12,59 +12,15 @@ variables:
   azureSubscription: '{{ azureRmConnection.Id }}'
 
   # Web app name
-  webAppName: '{{ webAppName }}'
+  dataFactoryName: '{{ dataFactoryName }}'
   
   # Environment name
-  environmentName: '{{ webAppName }}'
+  environmentName: '{{ dataFactoryName }}'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'ARM DF FileChecker Tst'
-    subscriptionId: $(azureSubscription)
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'filechecker-tst-factory-rg'
-    location: 'Canada Central'
-    templateLocation: 'Linked artifact'
-    csmFile: 'factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
-    csmParametersFile: 'factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
-    overrideParameters: '-factoryName factory4a77dwgfvvzmg -AzureDataLakeStorage1_properties_typeProperties_url https://storeiptr3ogmewhhg.dfs.core.windows.net'
-    deploymentMode: 'Incremental'
-
 stages:
-- stage: Build
-  displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-
-    steps:
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
-
 - stage: Deploy
   displayName: Deploy stage
   jobs:
@@ -77,16 +33,17 @@ stages:
       runOnce:
         deploy:
           steps:            
-          - task: AzureRmWebAppDeployment@4
-            displayName: 'Azure App Service Deploy: {{ webAppName }}'
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Azure Data Factory Deploy: {{ dataFactoryName }}'
             inputs:
-              azureSubscription: $(azureSubscription)
-              appType: webAppLinux
-              WebAppName: $(webAppName)
-              packageForLinux: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-              RuntimeStack: 'NODE|10.10'
-              StartupCommand: 'npm run start'
-              ScriptType: 'Inline Script'
-              InlineScript: |
-                npm install
-                npm run build --if-present
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'ARM DF FileChecker Tst'
+              subscriptionId: $(azureSubscription)
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'filechecker-tst-factory-rg'
+              location: 'Canada Central'
+              templateLocation: 'Linked artifact'
+              csmFile: 'factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
+              csmParametersFile: 'factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
+              overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://storeiptr3ogmewhhg.dfs.core.windows.net'
+              deploymentMode: 'Incremental'
