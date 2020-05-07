@@ -1,0 +1,13 @@
+{
+	"name": "AlphaVantage",
+	"properties": {
+		"description": "Realtime stock APIs",
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://www.alphavantage.co",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
