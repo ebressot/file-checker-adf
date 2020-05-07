@@ -1,0 +1,7 @@
+{
+	"name": "Copy_Alpha_Vantage_to_ADLS",
+	"properties": {
+		"description": "Copy Alpha Vantage data to Azure Data Lake Storage",
+		"annotations": []
+	}
+}
