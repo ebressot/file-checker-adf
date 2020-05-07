@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://storerhpkb34ytow6g.dfs.core.windows.net"
+			"url": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
 		}
 	}
 }
