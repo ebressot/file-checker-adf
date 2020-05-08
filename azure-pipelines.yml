@@ -48,7 +48,6 @@ stages:
     pool: 
       vmImage: $(vmImageName)
     variables:
-      azureRMConnection: 'ARM DF FileChecker Tst'
       resourceGroupName: 'filechecker-tst-factory-rg'
       dataFactoryName: 'factory4a77dwgfvvzmg'
       storageAccountName: storeiptr3ogmewhhg
@@ -60,7 +59,7 @@ stages:
             displayName: 'Azure Data Factory Deploy: $(dataFactoryName)'
             inputs:
               deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: $(azureRMConnection)
+              azureResourceManagerConnection: 'ARM DF FileChecker Tst'
               subscriptionId: $(azureSubscription)
               action: 'Create Or Update Resource Group'
               resourceGroupName: $(resourceGroupName)
