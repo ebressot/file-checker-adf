@@ -57,5 +57,5 @@ stages:
               templateLocation: 'Linked artifact'
               csmFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateForFactory.json'
               csmParametersFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateParametersForFactory.json'
-              overrideParameters: '-factoryName $(dataFactoryName) -Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties https://$(keyVaultName).vault.azure.net/secrets/alpha-vantage-api-key/$(alphaVantageApiKeyVersion)?api-version=7.0 -AzureDataLakeStorage1_properties_typeProperties https://$(storageAccountName).dfs.core.windows.net'
+              overrideParameters: '-factoryName $(dataFactoryName) -Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties https://$(keyVaultName).vault.azure.net/secrets/alpha-vantage-api-key/$(alphaVantageApiKeyVersion)?api-version=7.0 -AzureDataLakeStorage1_properties_typeProperties https://$(storageAccountName).dfs.core.windows.net -DailySchedule-EndOfBusinessDay_properties Started'
               deploymentMode: 'Incremental'
