@@ -6,44 +6,12 @@
 trigger:
 - adf_publish
 
-variables:
+pool:
+  vmImage: 'ubuntu-latest'
 
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '0e5022a1-8f52-4e29-bae9-eac1da0c16e6'
+steps:
+- script: pwd
+  displayName: 'Where am I'
 
-  # Web app name
-  dataFactoryName: 'factory4a77dwgfvvzmg'
-  
-  # Environment name
-  environmentName: 'factory4a77dwgfvvzmg'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
-stages:
-- stage: Deploy
-  displayName: Deploy stage
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    environment: $(environmentName)
-    pool: 
-      vmImage: $(vmImageName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:            
-          - task: AzureResourceManagerTemplateDeployment@3
-            displayName: 'Azure Data Factory Deploy: $(dataFactoryName)'
-            inputs:
-              deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: 'ARM DF FileChecker Tst'
-              subscriptionId: $(azureSubscription)
-              action: 'Create Or Update Resource Group'
-              resourceGroupName: 'filechecker-tst-factory-rg'
-              location: 'Canada Central'
-              templateLocation: 'Linked artifact'
-              csmFile: '$(System.DefaultWorkingDirectory)/factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
-              csmParametersFile: '$(System.DefaultWorkingDirectory)/factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
-              overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://storeiptr3ogmewhhg.dfs.core.windows.net'
-              deploymentMode: 'Incremental'
+- script: ls -la
+  displayName: 'What is there'
