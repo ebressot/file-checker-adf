@@ -16,5 +16,10 @@
                 }
             }]
         }
+    },
+    "Microsoft.DataFactory/factories/triggers": {
+        "properties": {
+            "runtimeState": "=::string"
+        }
     }
 }
