@@ -8,13 +8,16 @@
 			"defaultValue": "factorygdohx4l7wo7wy"
 		},
 		"Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties": {
-			"type": "string"
+			"type": "string",
+			"defaultValue": "https://key63ehtyag4onc6.vault.azure.net/secrets/alpha-vantage-api-key/9c1a3965a1274ea6bce9accbdb607688?api-version=7.0"
 		},
 		"AlphaVantage_properties_typeProperties": {
-			"type": "string"
+			"type": "string",
+			"defaultValue": "https://www.alphavantage.co"
 		},
 		"AzureDataLakeStorage1_properties_typeProperties": {
-			"type": "string"
+			"type": "string",
+			"defaultValue": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"type": "string",
