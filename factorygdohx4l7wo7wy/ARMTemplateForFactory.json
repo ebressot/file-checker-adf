@@ -18,6 +18,10 @@
 		"AzureDataLakeStorage1_properties_typeProperties": {
 			"type": "string",
 			"defaultValue": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
+		},
+		"DailySchedule-EndOfBusinessDay_properties": {
+			"type": "string",
+			"defaultValue": "Stopped"
 		}
 	},
 	"variables": {
@@ -328,7 +332,7 @@
 			"properties": {
 				"description": "Daily Schedule - end of business day",
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "[parameters('DailySchedule-EndOfBusinessDay_properties')]",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -344,8 +348,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2020-05-08T21:00:00.000Z",
-						"timeZone": "UTC",
-						"schedule": {}
+						"timeZone": "UTC"
 					}
 				}
 			},

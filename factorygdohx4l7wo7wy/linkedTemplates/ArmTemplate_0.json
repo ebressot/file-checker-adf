@@ -18,6 +18,10 @@
 		"Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties": {
 			"type": "string",
 			"defaultValue": "https://key63ehtyag4onc6.vault.azure.net/secrets/alpha-vantage-api-key/9c1a3965a1274ea6bce9accbdb607688?api-version=7.0"
+		},
+		"DailySchedule-EndOfBusinessDay_properties": {
+			"type": "string",
+			"defaultValue": "Stopped"
 		}
 	},
 	"variables": {
@@ -328,7 +332,7 @@
 			"properties": {
 				"description": "Daily Schedule - end of business day",
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "[parameters('DailySchedule-EndOfBusinessDay_properties')]",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -344,8 +348,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2020-05-08T21:00:00.000Z",
-						"timeZone": "UTC",
-						"schedule": {}
+						"timeZone": "UTC"
 					}
 				}
 			},

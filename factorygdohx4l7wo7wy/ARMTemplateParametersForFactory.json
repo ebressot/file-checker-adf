@@ -13,6 +13,9 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties": {
 			"value": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
+		},
+		"DailySchedule-EndOfBusinessDay_properties": {
+			"value": "Stopped"
 		}
 	}
 }
