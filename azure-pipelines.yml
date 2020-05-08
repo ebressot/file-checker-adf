@@ -41,21 +41,17 @@ stages:
 
 - stage: Deploy
   displayName: Deploy stage
-  variables:
-  - name: azureRMConnection
-    value: 'ARM DF FileChecker Tst'
-  - name: resourceGroupName
-    value: 'filechecker-tst-factory-rg'
-  - name: dataFactoryName
-    value: 'factory4a77dwgfvvzmg'
-  - name: storageAccountName
-    value: storeiptr3ogmewhhg
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    environment: $(resourceGroupName)
+    environment: 'Test'
     pool: 
       vmImage: $(vmImageName)
+    variables:
+      azureRMConnection: 'ARM DF FileChecker Tst'
+      resourceGroupName: 'filechecker-tst-factory-rg'
+      dataFactoryName: 'factory4a77dwgfvvzmg'
+      storageAccountName: storeiptr3ogmewhhg
     strategy:
       runOnce:
         deploy:
