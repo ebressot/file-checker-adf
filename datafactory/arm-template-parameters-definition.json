@@ -1,4 +1,13 @@
 {
+    "Microsoft.DataFactory/factories/linkedServices": {
+        "*": {
+            "properties": {
+                "typeProperties": {
+                    "url": "-::string"
+                }
+            }
+        }
+    },
     "Microsoft.DataFactory/factories/pipelines": {
         "properties": {
             "activities": [{
