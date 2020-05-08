@@ -25,19 +25,11 @@ stages:
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-
+    variables:
+      dataFactoryName: 'factorygdohx4l7wo7wy'
     steps:
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+    - publish: $(System.DefaultWorkingDirectory)/$(dataFactoryName)
+      artifact: DataFactory
 
 - stage: Deploy
   displayName: Deploy stage
@@ -54,7 +46,9 @@ stages:
     strategy:
       runOnce:
         deploy:
-          steps:            
+          steps:
+          - download: current
+            artifact: DataFactory
           - task: AzureResourceManagerTemplateDeployment@3
             displayName: 'Azure Data Factory Deploy: $(dataFactoryName)'
             inputs:
@@ -65,7 +59,7 @@ stages:
               resourceGroupName: $(resourceGroupName)
               location: $(azureLocation)
               templateLocation: 'Linked artifact'
-              csmFile: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip/factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
-              csmParametersFile: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip/factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
+              csmFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateForFactory.json'
+              csmParametersFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateParametersForFactory.json'
               overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://$(storageAccountName).dfs.core.windows.net'
               deploymentMode: 'Incremental'
