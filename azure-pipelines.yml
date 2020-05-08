@@ -6,30 +6,71 @@
 trigger:
 - adf_publish
 
+variables:
+
+  # Azure Subscription
+  azureSubscription: '0e5022a1-8f52-4e29-bae9-eac1da0c16e6'
+
+  #Azure Location
+  azureLocation: 'Canada Central'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
 stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: drop
+
 - stage: Deploy
   displayName: Deploy stage
+  variables:
+  - name: azureRMConnection
+    value: 'ARM DF FileChecker Tst'
+  - name: resourceGroupName
+    value: 'filechecker-tst-factory-rg'
+  - name: dataFactoryName
+    value: 'factory4a77dwgfvvzmg'
+  - name: storageAccountName
+    value: storeiptr3ogmewhhg
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    environment: factory4a77dwgfvvzmg
+    environment: $(resourceGroupName)
     pool: 
-      vmImage: 'ubuntu-latest'
+      vmImage: $(vmImageName)
     strategy:
       runOnce:
         deploy:
           steps:            
           - task: AzureResourceManagerTemplateDeployment@3
-            displayName: 'Azure Data Factory Deploy: factory4a77dwgfvvzmg'
+            displayName: 'Azure Data Factory Deploy: $(dataFactoryName)'
             inputs:
               deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: 'ARM DF FileChecker Tst'
-              subscriptionId: '0e5022a1-8f52-4e29-bae9-eac1da0c16e6'
+              azureResourceManagerConnection: $(azureRMConnection)
+              subscriptionId: $(azureSubscription)
               action: 'Create Or Update Resource Group'
-              resourceGroupName: 'filechecker-tst-factory-rg'
-              location: 'Canada Central'
+              resourceGroupName: $(resourceGroupName)
+              location: $(azureLocation)
               templateLocation: 'Linked artifact'
-              csmFile: '$(System.DefaultWorkingDirectory)/factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
-              csmParametersFile: '$(System.DefaultWorkingDirectory)/factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
-              overrideParameters: '-factoryName factory4a77dwgfvvzmg -AzureDataLakeStorage1_properties_typeProperties_url https://storeiptr3ogmewhhg.dfs.core.windows.net'
+              csmFile: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip/factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
+              csmParametersFile: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip/factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
+              overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://$(storageAccountName).dfs.core.windows.net'
               deploymentMode: 'Incremental'
