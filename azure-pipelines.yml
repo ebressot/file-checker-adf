@@ -6,16 +6,6 @@
 trigger:
 - adf_publish
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- script: pwd
-  displayName: 'Where am I'
-
-- script: ls -la
-  displayName: 'What is there'
-
 stages:
 - stage: Deploy
   displayName: Deploy stage
