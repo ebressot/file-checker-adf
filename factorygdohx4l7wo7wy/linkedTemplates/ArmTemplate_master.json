@@ -7,13 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "factorygdohx4l7wo7wy"
 		},
-		"AlphaVantage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://www.alphavantage.co"
+		"Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties": {
+			"type": "string"
 		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
+		"AlphaVantage_properties_typeProperties": {
+			"type": "string"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties": {
+			"type": "string"
 		},
 		"containerUri": {
 			"type": "string",
@@ -42,11 +43,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AlphaVantage_properties_typeProperties_url": {
-						"value": "[parameters('AlphaVantage_properties_typeProperties_url')]"
+					"AlphaVantage_properties_typeProperties": {
+						"value": "[parameters('AlphaVantage_properties_typeProperties')]"
 					},
-					"AzureDataLakeStorage1_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					"AzureDataLakeStorage1_properties_typeProperties": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties')]"
+					},
+					"Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties": {
+						"value": "[parameters('Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties')]"
 					}
 				}
 			},

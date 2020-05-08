@@ -7,13 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "factorygdohx4l7wo7wy"
 		},
-		"AlphaVantage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://www.alphavantage.co"
+		"Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties": {
+			"type": "string"
 		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
+		"AlphaVantage_properties_typeProperties": {
+			"type": "string"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties": {
+			"type": "string"
 		}
 	},
 	"variables": {
@@ -41,7 +42,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://key63ehtyag4onc6.vault.azure.net/secrets/alpha-vantage-api-key/9c1a3965a1274ea6bce9accbdb607688?api-version=7.0",
+							"url": "[parameters('Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties')]",
 							"method": "GET",
 							"headers": {},
 							"authentication": {
@@ -297,7 +298,7 @@
 				"annotations": [],
 				"type": "RestService",
 				"typeProperties": {
-					"url": "[parameters('AlphaVantage_properties_typeProperties_url')]",
+					"url": "[parameters('AlphaVantage_properties_typeProperties')]",
 					"enableServerCertificateValidation": true,
 					"authenticationType": "Anonymous"
 				}
@@ -312,7 +313,7 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties')]"
 				}
 			},
 			"dependsOn": []

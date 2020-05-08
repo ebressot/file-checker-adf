@@ -5,11 +5,14 @@
 		"factoryName": {
 			"value": "factorygdohx4l7wo7wy"
 		},
-		"AlphaVantage_properties_typeProperties_url": {
-			"value": "https://www.alphavantage.co"
+		"Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties": {
+			"value": ""
 		},
-		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"value": "https://storej4sr7bdwpirsu.dfs.core.windows.net"
+		"AlphaVantage_properties_typeProperties": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties": {
+			"value": ""
 		},
 		"containerUri": {
 			"value": ""
