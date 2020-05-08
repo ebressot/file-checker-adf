@@ -15,3 +15,31 @@ steps:
 
 - script: ls -la
   displayName: 'What is there'
+
+stages:
+- stage: Deploy
+  displayName: Deploy stage
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    environment: factory4a77dwgfvvzmg
+    pool: 
+      vmImage: 'ubuntu-latest'
+    strategy:
+      runOnce:
+        deploy:
+          steps:            
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Azure Data Factory Deploy: factory4a77dwgfvvzmg'
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'ARM DF FileChecker Tst'
+              subscriptionId: '0e5022a1-8f52-4e29-bae9-eac1da0c16e6'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: 'filechecker-tst-factory-rg'
+              location: 'Canada Central'
+              templateLocation: 'Linked artifact'
+              csmFile: '$(System.DefaultWorkingDirectory)/factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
+              csmParametersFile: '$(System.DefaultWorkingDirectory)/factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
+              overrideParameters: '-factoryName factory4a77dwgfvvzmg -AzureDataLakeStorage1_properties_typeProperties_url https://storeiptr3ogmewhhg.dfs.core.windows.net'
+              deploymentMode: 'Incremental'
