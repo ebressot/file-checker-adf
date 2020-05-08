@@ -42,6 +42,8 @@ stages:
     variables:
       resourceGroupName: 'filechecker-tst-factory-rg'
       dataFactoryName: 'factory4a77dwgfvvzmg'
+      keyVaultName: 'key63ehtyag4onc6'
+      alphaVantageApiKeyVersion: '1ddb227c18e040f988eb1c26877f5bf0'
       storageAccountName: storeiptr3ogmewhhg
     strategy:
       runOnce:
@@ -61,5 +63,5 @@ stages:
               templateLocation: 'Linked artifact'
               csmFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateForFactory.json'
               csmParametersFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateParametersForFactory.json'
-              overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://$(storageAccountName).dfs.core.windows.net'
+              overrideParameters: '-factoryName $(dataFactoryName) -Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties https://$(keyVaultName).vault.azure.net/secrets/alpha-vantage-api-key/$(alphaVantageApiKeyVersion)?api-version=7.0 -AzureDataLakeStorage1_properties_typeProperties https://$(storageAccountName).dfs.core.windows.net'
               deploymentMode: 'Incremental'
