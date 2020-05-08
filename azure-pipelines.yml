@@ -8,42 +8,58 @@ trigger:
 
 variables:
 
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '{{ azureRmConnection.Id }}'
+  # Azure Subscription
+  azureSubscription: '0e5022a1-8f52-4e29-bae9-eac1da0c16e6'
 
-  # Web app name
-  dataFactoryName: '{{ dataFactoryName }}'
-  
-  # Environment name
-  environmentName: '{{ dataFactoryName }}'
+  #Azure Location
+  azureLocation: 'Canada Central'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    variables:
+      dataFactoryName: 'factorygdohx4l7wo7wy'
+    steps:
+    - publish: $(System.DefaultWorkingDirectory)/$(dataFactoryName)
+      artifact: DataFactory
+
 - stage: Deploy
   displayName: Deploy stage
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    environment: $(environmentName)
+    environment: 'Test'
     pool: 
       vmImage: $(vmImageName)
+    variables:
+      resourceGroupName: 'filechecker-tst-factory-rg'
+      dataFactoryName: 'factory4a77dwgfvvzmg'
+      storageAccountName: storeiptr3ogmewhhg
     strategy:
       runOnce:
         deploy:
-          steps:            
+          steps:
+          - download: current
+            artifact: DataFactory
           - task: AzureResourceManagerTemplateDeployment@3
-            displayName: 'Azure Data Factory Deploy: {{ dataFactoryName }}'
+            displayName: 'Azure Data Factory Deploy: $(dataFactoryName)'
             inputs:
               deploymentScope: 'Resource Group'
               azureResourceManagerConnection: 'ARM DF FileChecker Tst'
               subscriptionId: $(azureSubscription)
               action: 'Create Or Update Resource Group'
-              resourceGroupName: 'filechecker-tst-factory-rg'
-              location: 'Canada Central'
+              resourceGroupName: $(resourceGroupName)
+              location: $(azureLocation)
               templateLocation: 'Linked artifact'
-              csmFile: 'factorygdohx4l7wo7wy/ARMTemplateForFactory.json'
-              csmParametersFile: 'factorygdohx4l7wo7wy/ARMTemplateParametersForFactory.json'
-              overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://storeiptr3ogmewhhg.dfs.core.windows.net'
+              csmFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateForFactory.json'
+              csmParametersFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateParametersForFactory.json'
+              overrideParameters: '-factoryName $(dataFactoryName) -AzureDataLakeStorage1_properties_typeProperties_url https://$(storageAccountName).dfs.core.windows.net'
               deploymentMode: 'Incremental'
