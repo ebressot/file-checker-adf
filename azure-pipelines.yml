@@ -36,7 +36,7 @@ stages:
     variables:
       resourceGroupName: 'filechecker-tst-factory-rg'
       dataFactoryName: 'factory4a77dwgfvvzmg'
-      keyVaultName: 'key63ehtyag4onc6'
+      keyVaultName: 'keygwu3qy7zy2a3s'
       alphaVantageApiKeyVersion: '1ddb227c18e040f988eb1c26877f5bf0'
       storageAccountName: storeiptr3ogmewhhg
     strategy:
