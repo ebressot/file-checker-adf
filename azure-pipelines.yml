@@ -38,7 +38,8 @@ stages:
       dataFactoryName: 'factory4a77dwgfvvzmg'
       keyVaultName: 'keygwu3qy7zy2a3s'
       alphaVantageApiKeyVersion: '1ddb227c18e040f988eb1c26877f5bf0'
-      storageAccountName: storeiptr3ogmewhhg
+      storageAccountName: 'storeiptr3ogmewhhg'
+      triggerName: 'DailySchedule-EndOfBusinessDay'
     strategy:
       runOnce:
         deploy:
@@ -59,3 +60,10 @@ stages:
               csmParametersFile: '$(Pipeline.Workspace)/DataFactory/ARMTemplateParametersForFactory.json'
               overrideParameters: '-factoryName $(dataFactoryName) -Copy_Alpha_Vantage_to_ADLS_properties_0_typeProperties https://$(keyVaultName).vault.azure.net/secrets/alpha-vantage-api-key/$(alphaVantageApiKeyVersion)?api-version=7.0 -AzureDataLakeStorage1_properties_typeProperties https://$(storageAccountName).dfs.core.windows.net'
               deploymentMode: 'Incremental'
+          - task: AzurePowerShell@5
+            displayName: 'Azure Data Factory Trigger Start: $(triggerName)'
+            inputs:
+              azureSubscription: 'HotmailAzureSubscription'
+              ScriptType: 'InlineScript'
+              Inline: 'Start-AzDataFactoryV2Trigger -ResourceGroupName $(resourceGroupName) -DataFactoryName $(dataFactoryName) -TriggerName $(triggerName) -Force'
+              azurePowerShellVersion: 'LatestVersion'
