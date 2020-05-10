@@ -7,9 +7,10 @@ trigger:
 - adf_publish
 
 variables:
-
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  # Azure data factory trigger
+  triggerName: 'DailySchedule-EndOfBusinessDay'
 
 stages:
 - stage: Build
@@ -30,16 +31,11 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy
-    environment: 'Test'
+    environment: 'Staging'
     pool: 
       vmImage: $(vmImageName)
     variables:
-      resourceGroupName: 'filechecker-tst-factory-rg'
-      dataFactoryName: 'factory4a77dwgfvvzmg'
-      keyVaultName: 'keygwu3qy7zy2a3s'
-      alphaVantageApiKeyVersion: '1ddb227c18e040f988eb1c26877f5bf0'
-      storageAccountName: 'storeiptr3ogmewhhg'
-      triggerName: 'DailySchedule-EndOfBusinessDay'
+    - group: filechecker-variables-staging
     strategy:
       runOnce:
         deploy:
