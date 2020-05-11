@@ -1,0 +1,22 @@
+{
+	"name": "SourceDataset_r9j",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "bulk_export_sample.tar.gz",
+				"fileSystem": "files"
+			},
+			"compression": {
+				"type": "GZip",
+				"level": "Fastest"
+			}
+		}
+	}
+}
