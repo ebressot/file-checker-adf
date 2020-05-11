@@ -1,0 +1,22 @@
+{
+	"name": "SourceDataset_7sj",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "bulk_export_sample.tar",
+				"fileSystem": "files"
+			},
+			"compression": {
+				"type": "Deflate",
+				"level": "Fastest"
+			}
+		}
+	}
+}
